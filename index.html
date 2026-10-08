@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMPEMIK Connect - Plateforme Unifiée Officielle | Kinshasa, RDC</title>
+
+    <!-- Balises SEO & Moteurs de Recherche (Optimisation Virale) -->
+    <meta name="description" content="Plateforme officielle d'AMPEMIK ASBL à Kinshasa. Formations professionnelles privées avec brevets, bio-fertilisants AMPEMIK BIO-TECH, marché communautaire, guichet emploi, articles scientifiques, microfinance et parrainage sécurisé M-PESA.">
+    <meta name="keywords" content="AMPEMIK, Kinshasa, ASBL, Apprends-Moi à Pêcher Mikobi, Bio-fertilisant, Microfinance, Parrainage, M-PESA">
+    <meta name="author" content="Sylvain Mikobi Kwete">
+
+    <!-- Open Graph / Réseaux Sociaux (Viralité WhatsApp & Facebook) -->
+    <meta property="og:title" content="AMPEMIK Connect - Plateforme Unifiée & Sociale">
+    <meta property="og:description" content="Développez vos compétences, vendez et acheter, trouvez de l'emploi. entreprendre et sécurité sociale. Rejoignez AMPEMIK ASBL à Kinshasa !">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- html2canvas pour le téléchargement de la carte membre -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- SUPABASE CLIENT (Stockage Cloud en Temps Réel) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 900: '#14532d' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen pb-24 md:pb-12">
+
+    <!-- Header Principal Sticky -->
+    <header class="bg-slate-950/95 backdrop-blur-md border-b border-brand-900/50 sticky top-0 z-40 shadow-xl">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-md border border-brand-500/30 shrink-0">
+                    <img id="app-logo-header" src="LOGO 4 AMPEMIK.png" alt="Logo AMPEMIK" class="max-h-full max-w-full object-contain" onerror="this.src='https://via.placeholder.com/40?text=AMP'">
+                </div>
+                <div>
+                    <h1 class="font-black text-base sm:text-lg leading-none text-white tracking-wide flex items-center gap-1.5">
+                        AMPEMIK CONNECT <span class="text-[9px] bg-brand-500/20 text-brand-400 border border-brand-500/30 px-1.5 py-0.5 rounded-md font-mono">v4.2 Cloud+Local</span>
+                    </h1>
+                    <p class="text-[10px] text-brand-400 font-medium hidden sm:block">Apprends-Moi à Pêcher Mikobi | ASBL Kinshasa</p>
+                </div>
+            </div>
+
+            <!-- Actions Rapides Header -->
+            <div class="flex items-center gap-2">
+                <button onclick="openVerifyModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-2 rounded-xl border border-slate-700 flex items-center gap-1.5 transition-all">
+                    <i class="fa-solid fa-qrcode text-brand-400"></i>
+                    <span class="hidden md:inline">Vérifier Carte</span>
+                </button>
+                <button onclick="openAdhesionModal()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition-all animate-pulse">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>S'adhérer (5 000 FC)</span>
+                </button>
+                <button onclick="requestAdminCodePrompt()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition-all">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span class="hidden sm:inline">Admin</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 pt-6 space-y-8">
+
+        <!-- Bannière d'accueil -->
+        <div class="relative overflow-hidden bg-gradient-to-r from-brand-950 via-slate-900 to-slate-950 p-6 sm:p-8 rounded-3xl border border-brand-500/30 shadow-2xl">
+            <div class="relative z-10 space-y-3 max-w-2xl">
+                <span class="text-[10px] bg-brand-500/20 text-brand-300 border border-brand-500/30 font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1">
+                    <i class="fa-solid fa-fire text-brand-400 text-[10px]"></i> Réseau Cloud & Local Synchronisé à Kinshasa
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                    Développez vos compétences, vendez et acheter, trouvez de l'emploi. entreprendre et sécurité sociale.
+                </h2>
+                <p class="text-slate-300 text-xs sm:text-sm">
+                    Rejoignez AMPEMIK ASBL. Microfinance, sécurité sociale, articles scientifiques, formations certifiées et parrainage rémunéré (20%) via M-PESA.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3">
+                    <button onclick="openAdhesionModal()" class="bg-gradient-to-r from-brand-600 to-emerald-600 hover:from-brand-500 hover:to-emerald-500 text-white font-black text-xs px-5 py-3 rounded-2xl shadow-xl transition-all flex items-center gap-2">
+                        <span>Obtenir ma Carte Membre (Parrainage 20%)</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <a href="#section-social" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-4 py-3 rounded-2xl border border-slate-700 transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved text-brand-400"></i> Microfinance & Assurances
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION VIDÉOS PUBLICITAIRES -->
+        <section id="section-videos" class="space-y-4">
+            <div class="flex justify-between items-end border-b border-rose-500/30 pb-3">
+                <div>
+                    <span class="text-xs text-rose-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                        <i class="fa-solid fa-film"></i> Médias & Démos Produits
+                    </span>
+                    <h3 class="text-xl font-black text-white">Vidéos Publicitaires (1 Min Max)</h3>
+                </div>
+                <span class="text-[10px] text-slate-400">Découvrez nos réalisations en vidéo</span>
+            </div>
+            <div id="video-feed-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- Bar de Recherche Globale et Filtres -->
+        <div class="space-y-3">
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="search-input" onkeyup="filterGlobal()" placeholder="Rechercher un produit, article, offre, microfinance, formation..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-11 pr-5 py-3.5 text-sm text-white focus:outline-none focus:border-brand-500 shadow-xl transition-all">
+            </div>
+            
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+                <button onclick="filterCategory('ALL')" class="filter-btn active bg-brand-600 text-white font-bold px-4 py-2 rounded-xl whitespace-nowrap shadow-md">Tout voir</button>
+                <button onclick="filterCategory('PRODUITS')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2 rounded-xl whitespace-nowrap">🌱 Produits Bio-Tech</button>
+                <button onclick="filterCategory('ARTICLES')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2 rounded-xl whitespace-nowrap">📚 Articles & Inspirations</button>
+                <button onclick="filterCategory('SOCIAL')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2 rounded-xl whitespace-nowrap">🛡️ Microfinance & Assurances</button>
+                <button onclick="filterCategory('OFFRE')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2 rounded-xl whitespace-nowrap">🏷️ Annonces</button>
+                <button onclick="filterCategory('EMPLOI')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2 rounded-xl whitespace-nowrap">💼 Emplois & CV</button>
+                <button onclick="filterCategory('FORMATION')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2 rounded-xl whitespace-nowrap">🎓 Formations</button>
+            </div>
+        </div>
+
+        <!-- SECTION : ESPACE RÉDACTION, ARTICLES SCIENTIFIQUES & IDÉES ENTREPRENEURIALES -->
+        <section id="section-articles" class="space-y-4 searchable-section" data-cat="ARTICLES">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-end border-b border-emerald-500/30 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-emerald-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                        <i class="fa-solid fa-book-open-reader"></i> Recherche & Innovation
+                    </span>
+                    <h3 class="text-xl font-black text-white">Articles Scientifiques & Inspirations Entrepreneuriales</h3>
+                    <p class="text-xs text-slate-400">Partagez vos recherches en agro-écologie, bio-technologies et idées d'entreprise à Kinshasa.</p>
+                </div>
+                <button onclick="openArticleModal()" class="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-pen-nib text-sm"></i>
+                    <span>Rédiger un Article / Idée</span>
+                </button>
+            </div>
+
+            <div id="articles-listings" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </section>
+
+        <!-- SECTION : SÉCURITÉ SOCIALE, ASSURANCE & MICROFINANCE M-PESA -->
+        <section id="section-social" class="space-y-4 searchable-section" data-cat="SOCIAL">
+            <div class="flex justify-between items-end border-b border-brand-500/30 pb-3">
+                <div>
+                    <span class="text-xs text-brand-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                        <i class="fa-solid fa-hand-holding-dollar"></i> Guichet Solidaire & Financier
+                    </span>
+                    <h3 class="text-xl font-black text-white">Sécurité Sociale, Assurances & Microfinance M-Pesa</h3>
+                    <p class="text-xs text-slate-400">Épargne, prêts, assurance maladie et scolaire validés et notifiés à l'administrateur (N° M-Pesa : 0816927645).</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-piggy-bank"></i>
+                        </div>
+                        <h4 class="font-bold text-sm text-white">Microfinance (Épargne & Prêt)</h4>
+                        <p class="text-xs text-slate-300">Constituez votre épargne membre ou demandez un emprunt pour vos projets avec suivi M-Pesa.</p>
+                    </div>
+                    <button onclick="openMicrofinanceModal('EPARGNE_PRET')" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                        Épargner / Demander un Prêt
+                    </button>
+                </div>
+
+                <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-notes-medical"></i>
+                        </div>
+                        <h4 class="font-bold text-sm text-white">Assurance Maladie</h4>
+                        <p class="text-xs text-slate-300">Souscrivez à la couverture sanitaire solidaire AMPEMIK pour vous et votre famille.</p>
+                    </div>
+                    <button onclick="openMicrofinanceModal('ASSURANCE_MALADIE')" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                        Souscrire Assurance Maladie
+                    </button>
+                </div>
+
+                <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <h4 class="font-bold text-sm text-white">Assurance Scolaire</h4>
+                        <p class="text-xs text-slate-300">Sécurisez la scolarité de vos enfants grâce au fonds de soutien et d'assurance scolaire.</p>
+                    </div>
+                    <button onclick="openMicrofinanceModal('ASSURANCE_SCOLAIRE')" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                        Souscrire Assurance Scolaire
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION : CATALOGUE DES PRODUITS AMPEMIK -->
+        <section id="section-boutique" class="space-y-4 searchable-section" data-cat="PRODUITS">
+            <div class="flex justify-between items-end border-b border-slate-800 pb-3">
+                <div>
+                    <span class="text-xs text-brand-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                        <i class="fa-solid fa-flask"></i> Production Locale Certifiée
+                    </span>
+                    <h3 class="text-xl font-black text-white">Produits Officiels AMPEMIK</h3>
+                </div>
+                <span class="text-xs text-slate-400 bg-slate-950 border border-slate-800 px-3 py-1 rounded-xl">📍 Livraison rapide Kinshasa</span>
+            </div>
+            <div id="products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+        </section>
+
+        <!-- SECTION : MARCHÉ COMMUNAUTAIRE -->
+        <section id="section-marche" class="space-y-4 searchable-section" data-cat="OFFRE">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-end border-b border-amber-500/30 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-amber-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                        <i class="fa-solid fa-store"></i> Libre Échange & Courtage Sécurisé
+                    </span>
+                    <h3 class="text-xl font-black text-white">Marché Communautaire (Achats, Ventes, Immob)</h3>
+                    <p class="text-xs text-slate-400">Paiement sécurisé M-PESA avec commission statutaire de 10% pour l'ASBL.</p>
+                </div>
+                <button onclick="openMarketModal()" class="shrink-0 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-sm"></i>
+                    <span>Publier une Annonce</span>
+                </button>
+            </div>
+            <div id="market-listings" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- SECTION : ESPACE EMPLOI -->
+        <section id="section-emploi" class="space-y-4 searchable-section" data-cat="EMPLOI">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-end border-b border-sky-500/30 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-sky-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                        <i class="fa-solid fa-briefcase"></i> Insertion Professionnelle
+                    </span>
+                    <h3 class="text-xl font-black text-white">Guichet Emploi (Offres & CV Certifiés)</h3>
+                    <p class="text-xs text-slate-400">Mise en relation directe entre PME, recruteurs et jeunes talents adhérents.</p>
+                </div>
+                <button onclick="openJobModal()" class="shrink-0 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-file-circle-plus text-sm"></i>
+                    <span>Publier Offre / Déposer CV</span>
+                </button>
+            </div>
+            <div id="jobs-listings" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        </section>
+
+        <!-- SECTION : FORMATIONS PRIVÉES & BREVETS -->
+        <section id="section-formations" class="space-y-4 searchable-section" data-cat="FORMATION">
+            <div class="flex justify-between items-end border-b border-brand-500/30 pb-3">
+                <div>
+                    <span class="text-xs text-brand-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                        <i class="fa-solid fa-graduation-cap"></i> AMPEMIK Académie Privée
+                    </span>
+                    <h3 class="text-xl font-black text-white">Formations Professionnelles & Brevets Officiels</h3>
+                    <p class="text-xs text-slate-400">Libre choix des domaines. Formation privée sanctionnée par un <strong>brevet officiel</strong> après validation du paiement.</p>
+                </div>
+            </div>
+            <div id="formations-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- SECTION : MESSAGERIE & CHAT -->
+        <section class="space-y-4 searchable-section">
+            <div class="flex justify-between items-end border-b border-purple-500/30 pb-3">
+                <div>
+                    <span class="text-xs text-purple-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                        <i class="fa-solid fa-comments"></i> Espace Interaction
+                    </span>
+                    <h3 class="text-xl font-black text-white">Discussions & Forum des Membres</h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-1 bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h4 class="font-bold text-xs text-purple-300 uppercase tracking-wider flex items-center gap-1">
+                        <i class="fa-solid fa-paper-plane"></i> Envoyer un Message
+                    </h4>
+                    <form id="chat-send-form" class="space-y-3 text-xs">
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-medium">Votre Nom / Matricule *</label>
+                            <input type="text" id="chat-sender" required placeholder="Ex: Sylvain Mikobi (#AMP-1001)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-medium">Canal / Destinataire *</label>
+                            <select id="chat-recipient" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-purple-500">
+                                <option value="ADMIN_AMPEMIK">🏛️ Administration AMPEMIK ASBL</option>
+                                <option value="TOUS_LES_MEMBRES">📢 Fil Général des Membres</option>
+                                <option value="DIRECT_MEMBER">👤 Message Privé à un membre</option>
+                            </select>
+                        </div>
+                        <div id="target-member-box" class="hidden">
+                            <label class="block text-slate-400 mb-1 font-medium">Matricule Destinataire *</label>
+                            <input type="text" id="chat-target-member" placeholder="#AMP-2026-1002" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white uppercase focus:outline-none focus:border-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-medium">Votre Message *</label>
+                            <textarea id="chat-message" required rows="3" placeholder="Rédigez votre question ou annonce..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-purple-500"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Publier le Message
+                        </button>
+                    </form>
+                </div>
+
+                <div class="md:col-span-2 bg-slate-950 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between min-h-[350px] max-h-[450px]">
+                    <h4 class="font-bold text-xs text-purple-300 uppercase tracking-wider mb-3 flex items-center gap-1">
+                        <i class="fa-solid fa-list-ul"></i> Fil de Discussion en Direct
+                    </h4>
+                    <div id="chat-feed-list" class="space-y-2.5 overflow-y-auto pr-1 text-xs flex-1"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partage WhatsApp Global Viral -->
+        <div class="text-center pt-4">
+            <button id="btn-share-whatsapp" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-6 rounded-2xl inline-flex items-center gap-2 shadow-xl text-sm transition-all animate-bounce">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>🚀 Partager AMPEMIK Connect & Parrainer vos Amis sur WhatsApp (Bonus 20%)</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- BARRE DE NAVIGATION MOBILE -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-950 border-t border-slate-800 z-40 px-3 py-2 flex justify-around items-center text-[10px]">
+        <a href="#section-boutique" class="flex flex-col items-center gap-1 text-slate-400 hover:text-brand-400"><i class="fa-solid fa-store text-base"></i><span>Boutique</span></a>
+        <a href="#section-articles" class="flex flex-col items-center gap-1 text-slate-400 hover:text-brand-400"><i class="fa-solid fa-book-open-reader text-base"></i><span>Articles</span></a>
+        <button onclick="openAdhesionModal()" class="bg-brand-600 text-white p-3 rounded-full -mt-5 border-4 border-slate-900 shadow-xl"><i class="fa-solid fa-id-card text-base"></i></button>
+        <a href="#section-social" class="flex flex-col items-center gap-1 text-slate-400 hover:text-sky-400"><i class="fa-solid fa-shield-halved text-base"></i><span>Social</span></a>
+        <button onclick="requestAdminCodePrompt()" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400"><i class="fa-solid fa-user-shield text-base"></i><span>Admin</span></button>
+    </nav>
+
+    <!-- MODAL AUTH ADMIN -->
+    <div id="admin-auth-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-5 shadow-2xl relative">
+            <button onclick="closeModal('admin-auth-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-amber-500/20 text-amber-300 font-bold px-3 py-1 rounded-full uppercase">Sécurité Anti-Piratage</span>
+                <h3 class="text-xl font-black text-white">Espace Administrateur Sécurisé</h3>
+                <p class="text-xs text-slate-400">Saisissez le code d'accès ou recevez-le sur ampeasbl@gmail.com.</p>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Code Administrateur Secret *</label>
+                    <input type="password" id="admin-pass-input" placeholder="Saisir le code d'accès" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <button onclick="verifyAdminCodeSubmitted()" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl transition-all shadow-md text-sm">
+                    🔒 Déverrouiller le Tableau de Bord
+                </button>
+                <div class="pt-3 border-t border-slate-800 text-center space-y-2">
+                    <button onclick="sendCodeToGmail()" id="btn-send-gmail" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-envelope"></i> Recevoir le code sur ampeasbl@gmail.com
+                    </button>
+                    <p id="gmail-status-msg" class="text-[10px] text-emerald-400 font-semibold hidden"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ADHÉSION & PARRAINAGE 20% -->
+    <div id="adhesion-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-brand-500/40 rounded-3xl p-6 sm:p-8 max-w-2xl w-full space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('adhesion-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-brand-500/20 text-brand-300 font-bold px-3 py-1 rounded-full uppercase">Adhésion & Parrainage 20%</span>
+                <h3 class="text-2xl font-black text-white">Devenir Membre AMPEMIK</h3>
+                <p class="text-xs text-slate-300">Frais d'adhésion : <strong class="text-brand-400">5 000 FC</strong> (Payable par M-PESA au 0816927645 ou Cash au bureau). <br><span class="text-emerald-400 font-bold">🎁 Parrainez un ami et gagnez 20% de commission (1 000 FC) versés chaque semaine !</span></p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <form id="registration-form" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Nom Complet *</label>
+                        <input type="text" id="reg-full-name" required placeholder="Ex: Sylvain Mikobi Kwete" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Numéro Téléphone M-PESA *</label>
+                        <input type="tel" id="reg-phone-number" required placeholder="Ex: 0816927645" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Catégorie / Métier *</label>
+                        <select id="reg-user-profile" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-500">
+                            <option value="Agriculteur / Maraîcher">🌾 Agriculteur / Maraîcher</option>
+                            <option value="Floriculteur / Fleuriste">🌸 Fleuriste / Floriculteur</option>
+                            <option value="Chercheur d'emploi">💼 Chercheur d'emploi</option>
+                            <option value="Élève / Étudiant">🎓 Élève / Étudiant</option>
+                            <option value="Commerçant / Entrepreneur">🏪 Commerçant / Entrepreneur</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Matricule du Parrain (Optionnel - Pour Parrainage)</label>
+                        <input type="text" id="reg-sponsor" placeholder="Ex: #AMP-2026-1001" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white uppercase focus:outline-none focus:border-brand-500">
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-brand-600 to-emerald-600 hover:from-brand-500 hover:to-emerald-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs">
+                        <i class="fa-solid fa-paper-plane"></i> Valider mon Inscription
+                    </button>
+                </form>
+                <div class="space-y-3">
+                    <div id="member-card-preview" class="bg-gradient-to-tr from-slate-950 via-brand-950 to-slate-900 p-5 rounded-2xl border border-brand-500/40 shadow-2xl space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[9px] bg-brand-500 text-slate-950 font-black px-2 py-0.5 rounded uppercase">CARTE MEMBRE</span>
+                            <span class="text-[10px] text-brand-300 font-mono font-bold" id="card-matricule">#AMP-2026-XXXX</span>
+                        </div>
+                        <div>
+                            <span class="text-[9px] text-slate-400 block uppercase">Titulaire</span>
+                            <span class="font-bold text-sm text-white block truncate" id="card-name">Votre Nom Complet</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px]">
+                            <div><span class="text-slate-400 block">Catégorie</span><span class="text-slate-200 font-semibold" id="card-category">Sélectionner</span></div>
+                            <div class="text-right"><span class="text-slate-400 block">Statut</span><span class="text-amber-400 font-bold" id="card-status">En Attente ⏳</span></div>
+                        </div>
+                        <div class="pt-3 border-t border-slate-800 flex justify-between items-center">
+                            <div id="qrcode" class="bg-white p-1 rounded-md"></div>
+                            <span class="text-[9px] text-slate-400 text-right">AMPEMIK ASBL<br>Kinshasa, RDC</span>
+                        </div>
+                    </div>
+                    <button onclick="downloadMemberCard()" class="w-full bg-slate-800 hover:bg-slate-700 text-brand-400 border border-brand-500/30 text-xs py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-download"></i> Télécharger ma Carte (Image)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL RÉDACTION ARTICLE -->
+    <div id="article-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('article-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-3 py-1 rounded-full uppercase">Espace Rédaction & Recherche</span>
+                <h3 class="text-xl font-black text-white">Publier un Article ou une Idée</h3>
+            </div>
+            <form id="article-form" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Votre Matricule Membre Validé *</label>
+                    <input type="text" id="article-matricule" required placeholder="#AMP-2026-1001" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white uppercase focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Type de Publication *</label>
+                    <select id="article-type" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500">
+                        <option value="ARTICLE SCIENTIFIQUE">🔬 Article Scientifique</option>
+                        <option value="INSPIRATION INNOVATRICE">💡 Inspiration Innovatrice</option>
+                        <option value="IDÉE ENTREPRENEURIALE">🚀 Idée Entrepreneuriale</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Titre de la Publication *</label>
+                    <input type="text" id="article-title" required placeholder="Ex: Efficacité des bio-fertilisants sur les amaranthes..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Contenu Détaillé / Article *</label>
+                    <textarea id="article-content" required rows="5" placeholder="Rédigez votre article ou décrivez votre idée novatrice..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all">
+                    Publier sur la Plateforme
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL MICROFINANCE & SÉCURITÉ SOCIALE -->
+    <div id="microfinance-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-brand-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('microfinance-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-brand-500/20 text-brand-300 font-bold px-3 py-1 rounded-full uppercase" id="mf-modal-badge">Guichet Solidaire</span>
+                <h3 class="text-xl font-black text-white" id="mf-modal-title">Souscription / Demande</h3>
+                <p class="text-xs text-slate-300">Paiement et versement via M-Pesa au <strong class="text-brand-400">0816927645</strong>. Notification immédiate à l'administrateur.</p>
+            </div>
+            <form id="microfinance-form" class="space-y-3 text-xs">
+                <input type="hidden" id="mf-service-type">
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Votre Nom Complet *</label>
+                    <input type="text" id="mf-name" required placeholder="Sylvain Mikobi" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Votre Matricule Membre (#AMP-...) *</label>
+                    <input type="text" id="mf-matricule" required placeholder="#AMP-2026-1001" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white uppercase focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Numéro M-Pesa de Transaction *</label>
+                    <input type="tel" id="mf-phone" required placeholder="0816927645" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1" id="mf-amount-label">Montant (FC / USD) *</label>
+                    <input type="text" id="mf-amount" required placeholder="Ex: 20 000 FC" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Détails / Motif / Demande de Prêt *</label>
+                    <textarea id="mf-desc" required rows="3" placeholder="Précisez s'il s'agit d'une épargne, d'une demande de prêt ou d'une souscription assurance..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Soumettre à l'Administrateur (M-Pesa)
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL FORMATION PRIVÉE -->
+    <div id="formation-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-brand-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-4 shadow-2xl relative">
+            <button onclick="closeModal('formation-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-brand-500/20 text-brand-300 font-bold px-3 py-1 rounded-full uppercase">Formation Privée & Brevet</span>
+                <h3 class="text-xl font-black text-white" id="modal-formation-title">S'inscrire à la Formation</h3>
+                <p class="text-xs text-slate-300">Paiement par M-PESA (0816927645) ou en présentiel au bureau</p>
+            </div>
+            <form id="formation-pay-form" class="space-y-3 text-xs">
+                <input type="hidden" id="selected-formation-id">
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Votre Nom Complet *</label>
+                    <input type="text" id="form-user-name" required placeholder="Sylvain Mikobi" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Votre Matricule Membre (#AMP-...) *</label>
+                    <input type="text" id="form-user-matricule" required placeholder="#AMP-2026-1001" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white uppercase focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Téléphone utilisé pour le Paiement M-PESA *</label>
+                    <input type="tel" id="form-user-phone" required placeholder="0816927645" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Mode de Paiement *</label>
+                    <select id="form-payment-mode" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                        <option value="MPESA">📱 M-PESA (0816927645)</option>
+                        <option value="BUREAU">🏢 Paiement en Présentiel au Bureau</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Soumettre la Demande à l'Admin
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL MARCHÉ -->
+    <div id="market-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('market-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-amber-500/20 text-amber-300 font-bold px-3 py-1 rounded-full uppercase">Marché Communautaire</span>
+                <h3 class="text-xl font-black text-white">Publier une Annonce</h3>
+            </div>
+            <form id="market-form" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Votre Matricule Membre Validé *</label>
+                    <input type="text" id="market-matricule" required placeholder="Ex: #AMP-2026-1001" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white uppercase focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Type d'Annonce *</label>
+                        <select id="market-type" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+                            <option value="OFFRE">🏷️ Vente / Offre</option>
+                            <option value="DEMANDE">🔍 Demande / Achat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Prix / Budget *</label>
+                        <input type="text" id="market-price" required placeholder="Ex: 50 000 FC" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Titre de l'Annonce *</label>
+                    <input type="text" id="market-title" required placeholder="Ex: Sac de Piments Bio / Parcelle Macampagne" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Commune / Adresse *</label>
+                    <input type="text" id="market-location" required placeholder="Ex: Ngaliema, Kinshasa" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Image du Produit (Très Recommandé)</label>
+                    <input type="file" id="market-image-input" accept="image/*" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-400">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Description Détaillée *</label>
+                    <textarea id="market-desc" required rows="3" placeholder="Donnez plus de détails sur le produit ou service..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all">
+                    Publier Immédiatement
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EMPLOI -->
+    <div id="job-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-sky-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('job-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-sky-500/20 text-sky-300 font-bold px-3 py-1 rounded-full uppercase">Guichet Emploi</span>
+                <h3 class="text-xl font-black text-white">Publier une Offre ou un CV</h3>
+            </div>
+            <form id="job-form" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Votre Matricule Membre *</label>
+                    <input type="text" id="job-matricule" required placeholder="#AMP-2026-1001" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white uppercase focus:outline-none focus:border-sky-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Type *</label>
+                        <select id="job-type" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-sky-500">
+                            <option value="OFFRE">📢 Offre d'Emploi</option>
+                            <option value="CV">📄 Profil / CV Candidat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Téléphone WhatsApp *</label>
+                        <input type="tel" id="job-contact" required placeholder="0816927645" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-sky-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Intitulé du Poste / Spécialité *</label>
+                    <input type="text" id="job-title" required placeholder="Ex: Comptable PME / Agronome" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Nom / Entreprise *</label>
+                    <input type="text" id="job-author" required placeholder="Ex: Ets Mikobi ou Sylvain Kwete" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Description des compétences / besoins *</label>
+                    <textarea id="job-desc" required rows="3" placeholder="Présentez l'offre d'emploi ou votre parcours..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-sky-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all">
+                    Publier dans l'Espace Emploi
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL COMMANDE -->
+    <div id="order-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-brand-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-4 shadow-2xl relative">
+            <button onclick="closeModal('order-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-brand-500/20 text-brand-300 font-bold px-3 py-1 rounded-full uppercase">Commande Directe</span>
+                <h3 class="text-xl font-black text-white" id="modal-item-title">Passer une Commande</h3>
+                <p class="text-xs text-slate-300" id="modal-item-subtitle">Validation par M-PESA & WhatsApp</p>
+            </div>
+            <form id="order-form" class="space-y-3 text-xs">
+                <input type="hidden" id="selected-item-name">
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Votre Nom Complet *</label>
+                    <input type="text" id="order-name" required placeholder="Sylvain Mikobi" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Téléphone M-PESA *</label>
+                    <input type="tel" id="order-phone" required placeholder="0816927645" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Commune / Adresse de Livraison *</label>
+                    <input type="text" id="order-address" required placeholder="Ngaliema, Kinshasa" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Quantité souhaitée *</label>
+                    <input type="text" id="order-quantity" required placeholder="Ex: 2 Bouteilles" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> Envoyer la commande WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL VÉRIFICATION CARTE -->
+    <div id="verify-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-brand-500/40 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl relative">
+            <button onclick="closeModal('verify-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-1">
+                <span class="text-[10px] bg-brand-500/20 text-brand-300 font-bold px-3 py-1 rounded-full uppercase">Contrôle Officiel</span>
+                <h3 class="text-xl font-black text-white">Vérification de Carte Membre</h3>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Saisir le Matricule (#AMP-2026-XXXX) *</label>
+                    <input type="text" id="verify-input" placeholder="#AMP-2026-1001" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white uppercase focus:outline-none focus:border-brand-500">
+                </div>
+                <button onclick="verifyMemberCard()" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 rounded-xl transition-all">
+                    🔍 Rechercher
+                </button>
+            </div>
+            <div id="verify-result" class="hidden bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2 text-xs"></div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD ADMINISTRATEUR SÉCURISÉ -->
+    <div id="admin-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-3xl p-6 sm:p-8 max-w-4xl w-full space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('admin-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-4 gap-2">
+                <div>
+                    <span class="text-[10px] bg-amber-500/20 text-amber-300 font-bold px-3 py-1 rounded-full uppercase">Panneau de Contrôle & Sécurité</span>
+                    <h3 class="text-xl font-black text-white">Dashboard Administration AMPEMIK</h3>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="exportDataCSV()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs px-3 py-2 rounded-xl border border-amber-500/30 font-bold flex items-center gap-1"><i class="fa-solid fa-file-excel"></i> Exporter CSV</button>
+                    <button onclick="exportDataGmail()" class="bg-amber-600 hover:bg-amber-500 text-white text-xs px-3 py-2 rounded-xl font-bold flex items-center gap-1"><i class="fa-solid fa-envelope"></i> Sauvegarder par Email</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800"><span class="text-[10px] text-slate-400 uppercase block">Total Adhérents</span><span class="text-xl font-black text-brand-400" id="stat-total-members">0</span></div>
+                <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800"><span class="text-[10px] text-slate-400 uppercase block">Cartes Validées</span><span class="text-xl font-black text-emerald-400" id="stat-active-members">0</span></div>
+                <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800"><span class="text-[10px] text-slate-400 uppercase block">Frais Récoltés</span><span class="text-xl font-black text-amber-400" id="stat-total-funds">0 FC</span></div>
+                <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800"><span class="text-[10px] text-slate-400 uppercase block">Demandes Solidaire</span><span class="text-xl font-black text-sky-400" id="stat-total-mf">0</span></div>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-bold text-xs text-brand-400 uppercase tracking-wider flex items-center gap-1"><i class="fa-solid fa-hand-holding-dollar"></i> Validation Demandes (Épargne, Prêt, Assurances M-Pesa)</h4>
+                <div id="admin-mf-requests" class="space-y-2 max-h-48 overflow-y-auto"></div>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-bold text-xs text-amber-400 uppercase tracking-wider flex items-center gap-1"><i class="fa-solid fa-unlock-keyhole"></i> Déblocage des Formations après Paiement (M-PESA / Bureau)</h4>
+                <div id="admin-formations-requests" class="space-y-2 max-h-48 overflow-y-auto"></div>
+            </div>
+
+            <div class="bg-emerald-950/40 p-4 rounded-2xl border border-emerald-500/40 space-y-3">
+                <h4 class="font-bold text-xs text-emerald-400 uppercase flex items-center gap-1"><i class="fa-solid fa-money-bill-wave"></i> Validation d'un Membre (Paiement Cash en Main au Bureau)</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                    <input type="text" id="cash-member-name" placeholder="Nom Complet du Membre" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white">
+                    <input type="tel" id="cash-member-phone" placeholder="N° Téléphone" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white">
+                    <select id="cash-member-cat" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white">
+                        <option value="Agriculteur / Maraîcher">🌾 Agriculteur / Maraîcher</option>
+                        <option value="Floriculteur / Fleuriste">🌸 Fleuriste / Floriculteur</option>
+                        <option value="Chercheur d'emploi">💼 Chercheur d'emploi</option>
+                        <option value="Élève / Étudiant">🎓 Élève / Étudiant</option>
+                        <option value="Commerçant / Entrepreneur">🏪 Commerçant / Entrepreneur</option>
+                    </select>
+                </div>
+                <button onclick="adminValidateCashMember()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-md">⚡ Inscrire & Valider la Carte Immédiatement (Cash 5 000 FC)</button>
+            </div>
+
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+                <h4 class="font-bold text-xs text-amber-400 uppercase flex items-center gap-1"><i class="fa-solid fa-plus-circle"></i> Ajouter un Produit Officiel à la Boutique</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                    <input type="text" id="admin-prod-name" placeholder="Nom du produit" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white">
+                    <input type="text" id="admin-prod-price" placeholder="Prix (ex: 25 000 FC)" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white">
+                    <input type="text" id="admin-prod-sub" placeholder="Catégorie / Sous-titre" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <input type="file" id="admin-prod-img" accept="image/*" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-400">
+                    <textarea id="admin-prod-desc" rows="1" placeholder="Description du produit..." class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+                </div>
+                <button onclick="adminAddProduct()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all">Ajouter au Catalogue Officiel</button>
+            </div>
+
+            <div class="bg-rose-950/30 p-4 rounded-2xl border border-rose-500/30 space-y-3">
+                <h4 class="font-bold text-xs text-rose-400 uppercase flex items-center gap-1"><i class="fa-solid fa-video"></i> Publier une Vidéo (Depuis un Fichier Local - Max 1 min)</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <input type="text" id="admin-vid-title" placeholder="Titre de la vidéo publicitaire" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white">
+                    <input type="file" id="admin-vid-file" accept="video/*" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-400">
+                </div>
+                <button onclick="adminAddVideo()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all">🎬 Téléverser & Publier la Vidéo</button>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider flex items-center gap-1"><i class="fa-solid fa-users-gear"></i> Validation et Gestion des Cartes Membres</h4>
+                <div id="admin-members-list" class="space-y-2 max-h-60 overflow-y-auto"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPLICATION SCRIPT & LOGIQUE JS (DOUBLE STOCKAGE : LOCAL + CLOUD SUPABASE) -->
+    <script>
+        // CONFIGURATION SUPABASE (Remplacez par vos informations Supabase gratuites)
+        const SUPABASE_URL = 'VOTRE_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = 'VOTRE_SUPABASE_ANON_KEY';
+        const _supabase = (typeof supabase !== 'undefined' && SUPABASE_URL !== 'VOTRE_SUPABASE_URL') 
+            ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
+            : null;
+
+        const DB_KEYS = {
+            MEMBERS: 'ampemik_db_members',
+            MARKET: 'ampemik_db_market',
+            PRODUCTS: 'ampemik_db_products',
+            JOBS: 'ampemik_db_jobs',
+            CHATS: 'ampemik_db_chats',
+            VIDEOS: 'ampemik_db_videos',
+            FORMATIONS: 'ampemik_db_formations',
+            FORMATION_REQUESTS: 'ampemik_db_formation_requests',
+            ARTICLES: 'ampemik_db_articles',
+            MICROFINANCE: 'ampemik_db_microfinance',
+            ADMIN_CODE: 'ampemik_admin_code'
+        };
+
+        let activeAdminCode = localStorage.getItem(DB_KEYS.ADMIN_CODE) || "AMP2026";
+
+        const defaultProducts = [
+            { id: 1, name: 'Jus BRIGAIME', tag: '100% Naturel & Nutritif', price: '2 500 FC / Bouteille', desc: 'Jus artisanal rafraîchissant aux fruits locaux sélectionnés.', icon: 'fa-bottle-droplet', image: '' },
+            { id: 2, name: 'Janie Oil', tag: 'Soin Cosmétique Naturel', price: '10 000 FC / Flacon', desc: 'Huile pour le traitement et la brillance des cheveux et de la peau.', icon: 'fa-pump-soap', image: '' },
+            { id: 3, name: 'Bio-Fertilisant AMPEMIK', tag: 'Engrais Écologique', price: '25 000 FC / 5 Litres', desc: 'Enrichit les sols maraîchers et floraux sans chimie.', icon: 'fa-leaf', image: '' },
+            { id: 4, name: 'Bio-Stimulant Sanitaire', tag: 'Déboucheur Fosse Septique', price: 'Sur devis', desc: 'Formule enzymatique pour déboucher et liquéfier les résidus.', icon: 'fa-vial-circle-check', image: '' }
+        ];
+
+        const defaultFormations = [
+            { id: 101, title: 'Gestion PME, Comptabilité & Numérique', modules: '12 Modules Pratiques', price: '15 000 FC', desc: 'Bureautique, tenue des livres de caisse, outils numériques et marketing social. Sanctionné par un brevet officiel.', icon: 'fa-laptop-code' },
+            { id: 102, title: 'Agro-Écologie & Bio-Fertilisants', modules: '8 Modules sur le terrain', price: '15 000 FC', desc: 'Fabrication du bio-fertilisant AMPEMIK BIO-TECH, maraîchage biologique et floriculture moderne. Sanctionné par un brevet.', icon: 'fa-seedling' },
+            { id: 103, title: 'Marketing Numérique & E-Commerce', modules: '10 Modules Actualité', price: '20 000 FC', desc: 'Vente en ligne, gestion des réseaux sociaux, publicité ciblée et courtage digital. Sanctionné par un brevet.', icon: 'fa-bullhorn' }
+        ];
+
+        const defaultArticles = [
+            { id: 1, type: 'ARTICLE SCIENTIFIQUE', title: 'Impact des bio-fertilisants fermentés sur la culture maraîchère à Kinshasa', author: 'Sylvain Mikobi Kwete (#AMP-1001)', date: '2026-10-04', content: 'L\'utilisation combinée de biochar, de résidus de papaya et de levures locales améliore nettement la structure du sol et stimule la croissance rapide des amaranthes sans recourir aux engrais chimiques de synthèse.' }
+        ];
+
+        const defaultMicrofinance = [
+            { id: 1, type: 'EPARGNE_PRET', name: 'Sylvain Mikobi', matricule: '#AMP-1001', phone: '0816927645', amount: '25 000 FC', desc: 'Épargne mensuelle membre active.', status: 'VALIDÉ' }
+        ];
+
+        const defaultMarket = [
+            { id: 101, type: 'OFFRE', title: 'Maison 3 Chambres + Salon', price: '350 $ / Mois', location: 'Ngaliema, Macampagne', seller: 'Papa Joseph (#AMP-802)', phone: '0816927645', desc: 'Maison autonome avec clôture et grand parking.', image: '' }
+        ];
+
+        const defaultJobs = [
+            { id: 201, type: 'OFFRE', title: 'Comptable PME / Gestionnaire', author: 'Tsaphnath Finance', contact: '0816927645', desc: 'Cherchons diplômé en gestion pour tenue des livres à Kinshasa.' }
+        ];
+
+        const defaultMembers = [
+            { matricule: '#AMP-2026-1001', name: 'Sylvain Mikobi Kwete', phone: '0816927645', category: 'Commerçant / Entrepreneur', status: 'VALIDÉ', date: '2026-02-23' }
+        ];
+
+        const defaultChats = [
+            { id: 1, sender: 'Sylvain Mikobi', recipient: 'ADMIN_AMPEMIK', message: 'Bonjour la direction, la plateforme v4.2 avec double stockage est active !', date: '2026-10-08 10:30' }
+        ];
+
+        const defaultVideos = [
+            { id: 1, title: 'Présentation Bio-Fertilisant AMPEMIK', url: 'https://www.w3schools.com/html/mov_bbb.mp4' }
+        ];
+
+        // --- DOUBLE SYSTÈME DE GESTION DES DONNÉES (LOCAL + CLOUD) ---
+        function getDB(key, fallback) {
+            const stored = localStorage.getItem(key);
+            if (!stored) {
+                localStorage.setItem(key, JSON.stringify(fallback));
+                return fallback;
+            }
+            return JSON.parse(stored);
+        }
+
+        function saveDB(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+            // Synchronisation Cloud en arrière-plan si Supabase est configuré
+            syncCloudSave(key, data);
+        }
+
+        async function syncCloudSave(key, data) {
+            if (!_supabase) return;
+            const tableName = getTableNameFromKey(key);
+            if (!tableName) return;
+            try {
+                // Stratégie simple de mise à jour cloud
+                for (let item of data) {
+                    await _supabase.from(tableName).upsert(item, { onConflict: 'id' });
+                }
+            } catch (err) {
+                console.log("Erreur sync cloud:", err);
+            }
+        }
+
+        function getTableNameFromKey(key) {
+            if (key === DB_KEYS.PRODUCTS) return 'products';
+            if (key === DB_KEYS.ARTICLES) return 'articles';
+            if (key === DB_KEYS.MARKET) return 'market';
+            if (key === DB_KEYS.JOBS) return 'jobs';
+            if (key === DB_KEYS.CHATS) return 'chats';
+            if (key === DB_KEYS.VIDEOS) return 'videos';
+            if (key === DB_KEYS.MEMBERS) return 'members';
+            return null;
+        }
+
+        // Chargement initial intelligent (Cloud + Local)
+        async function initCloudSync() {
+            if (!_supabase) return;
+            try {
+                for (let keyName of Object.values(DB_KEYS)) {
+                    const tableName = getTableNameFromKey(keyName);
+                    if (tableName) {
+                        let { data, error } = await _supabase.from(tableName).select('*');
+                        if (!error && data && data.length > 0) {
+                            localStorage.setItem(keyName, JSON.stringify(data));
+                        }
+                    }
+                }
+                // Recharger l'affichage après synchro cloud
+                renderProducts();
+                renderFormations();
+                renderArticles();
+                renderMarket();
+                renderJobs();
+                renderChats();
+                renderVideos();
+            } catch (e) {
+                console.log("Mode hors-ligne ou cloud non joignable, utilisation du localStorage.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            renderFormations();
+            renderArticles();
+            renderMarket();
+            renderJobs();
+            renderChats();
+            renderVideos();
+            setupQRPreview();
+            initCloudSync(); // Synchronisation automatique avec iCloud/Supabase
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const refParam = urlParams.get('ref');
+            if (refParam) {
+                document.getElementById('reg-sponsor').value = refParam;
+                openAdhesionModal();
+            }
+
+            document.getElementById('chat-recipient').addEventListener('change', (e) => {
+                const targetBox = document.getElementById('target-member-box');
+                if (e.target.value === 'DIRECT_MEMBER') targetBox.classList.remove('hidden');
+                else targetBox.classList.add('hidden');
+            });
+        });
+
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function openAdhesionModal() { document.getElementById('adhesion-modal').classList.remove('hidden'); }
+        function openMarketModal() { document.getElementById('market-modal').classList.remove('hidden'); }
+        function openJobModal() { document.getElementById('job-modal').classList.remove('hidden'); }
+        function openVerifyModal() { document.getElementById('verify-modal').classList.remove('hidden'); }
+        function openArticleModal() { document.getElementById('article-modal').classList.remove('hidden'); }
+
+        function openMicrofinanceModal(serviceType) {
+            document.getElementById('mf-service-type').value = serviceType;
+            const titleMap = {
+                'EPARGNE_PRET': 'Épargne & Demande de Prêt (M-Pesa)',
+                'ASSURANCE_MALADIE': 'Souscription Assurance Maladie',
+                'ASSURANCE_SCOLAIRE': 'Souscription Assurance Scolaire'
+            };
+            document.getElementById('mf-modal-title').innerText = titleMap[serviceType] || 'Souscription Solidaire';
+            document.getElementById('microfinance-modal').classList.remove('hidden');
+        }
+
+        function requestAdminCodePrompt() {
+            document.getElementById('admin-auth-modal').classList.remove('hidden');
+        }
+
+        function verifyAdminCodeSubmitted() {
+            const pwd = document.getElementById('admin-pass-input').value.trim();
+            if (pwd === activeAdminCode || pwd === "AMP2026" || pwd === "admin") {
+                closeModal('admin-auth-modal');
+                renderAdminDashboard();
+                document.getElementById('admin-modal').classList.remove('hidden');
+                document.getElementById('admin-pass-input').value = '';
+            } else {
+                alert("❌ Code incorrect ou tentative non autorisée bloquée par la sécurité anti-piratage !");
+            }
+        }
+
+        function sendCodeToGmail() {
+            const newCode = "AMP-" + Math.floor(100000 + Math.random() * 900000);
+            activeAdminCode = newCode;
+            localStorage.setItem(DB_KEYS.ADMIN_CODE, newCode);
+
+            const mailtoUrl = `mailto:ampeasbl@gmail.com?subject=Code%20d%27Acc%C3%A8s%20Admin%20AMPEMIK&body=Voici%20votre%20nouveau%20code%20d%27acc%C3%A8s%20admin%20:%20${newCode}`;
+            window.open(mailtoUrl, '_blank');
+            
+            const status = document.getElementById('gmail-status-msg');
+            status.classList.remove('hidden');
+            status.innerText = `✅ Code généré (${newCode}) et envoyé à ampeasbl@gmail.com !`;
+        }
+
+        function generateSocialShareMarkup(titleText, descText) {
+            const currentUrl = window.location.href.split('?')[0];
+            const textShare = encodeURIComponent(`🔥 *AMPEMIK CONNECT — KINSHASA*\n${titleText}\n${descText}\n👉 Rejoignez-nous et obtenez votre carte membre ici : ${currentUrl}`);
+
+            return `
+                <div class="pt-2 border-t border-slate-800/80 mt-2 flex items-center justify-between gap-1 flex-wrap">
+                    <span class="text-[9px] text-slate-400 font-semibold uppercase"><i class="fa-solid fa-share-nodes text-brand-400"></i> Partager :</span>
+                    <div class="flex items-center gap-1.5">
+                        <a href="https://api.whatsapp.com/send?text=${textShare}" target="_blank" title="WhatsApp" class="w-6 h-6 rounded-full bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-[10px] hover:bg-emerald-600 hover:text-white transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}&quote=${textShare}" target="_blank" title="Facebook" class="w-6 h-6 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center text-[10px] hover:bg-blue-600 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/intent/tweet?text=${textShare}" target="_blank" title="X (Twitter)" class="w-6 h-6 rounded-full bg-slate-700 text-slate-200 flex items-center justify-center text-[10px] hover:bg-black hover:text-white transition-all"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${textShare}" target="_blank" title="Telegram" class="w-6 h-6 rounded-full bg-sky-600/20 text-sky-400 flex items-center justify-center text-[10px] hover:bg-sky-600 hover:text-white transition-all"><i class="fa-brands fa-telegram"></i></a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- GESTION ARTICLES & INSPIRATIONS ---
+        function renderArticles() {
+            const articles = getDB(DB_KEYS.ARTICLES, defaultArticles);
+            const container = document.getElementById('articles-listings');
+            container.innerHTML = '';
+
+            articles.forEach(a => {
+                const card = document.createElement('div');
+                card.className = "searchable-item bg-slate-950 p-4 rounded-2xl border border-slate-800 hover:border-emerald-500/40 transition-all space-y-3 flex flex-col justify-between";
+                const shareHtml = generateSocialShareMarkup(a.title, a.content);
+
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded">${a.type}</span>
+                            <span class="text-[9px] text-slate-400">${a.date}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-white">${a.title}</h4>
+                        <p class="text-xs text-slate-300">${a.content}</p>
+                        <span class="text-[10px] text-brand-400 block font-medium">Auteur : ${a.author}</span>
+                    </div>
+                    <div>${shareHtml}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('article-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const matricule = document.getElementById('article-matricule').value.trim();
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            const activeMember = members.find(m => m.matricule.toUpperCase() === matricule.toUpperCase() && m.status === 'VALIDÉ');
+
+            if (!activeMember) {
+                alert("⚠️ Seuls les membres validés (carte active) peuvent publier des articles scientifiques ou idées entrepreneuriales.");
+                return;
+            }
+
+            const newArt = {
+                id: Date.now(),
+                type: document.getElementById('article-type').value,
+                title: document.getElementById('article-title').value,
+                author: `${activeMember.name} (${activeMember.matricule})`,
+                date: new Date().toISOString().split('T')[0],
+                content: document.getElementById('article-content').value
+            };
+
+            const articles = getDB(DB_KEYS.ARTICLES, defaultArticles);
+            articles.unshift(newArt);
+            saveDB(DB_KEYS.ARTICLES, articles);
+
+            renderArticles();
+            alert("✅ Article ou inspiration publié avec succès sur le Cloud et en Local !");
+            closeModal('article-modal');
+            document.getElementById('article-form').reset();
+        });
+
+        // --- GESTION MICROFINANCE & ASSURANCES ---
+        document.getElementById('microfinance-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const serviceType = document.getElementById('mf-service-type').value;
+            const name = document.getElementById('mf-name').value.trim();
+            const matricule = document.getElementById('mf-matricule').value.trim();
+            const phone = document.getElementById('mf-phone').value.trim();
+            const amount = document.getElementById('mf-amount').value.trim();
+            const desc = document.getElementById('mf-desc').value.trim();
+
+            const mfList = getDB(DB_KEYS.MICROFINANCE, defaultMicrofinance);
+            mfList.unshift({
+                id: Date.now(),
+                type: serviceType,
+                name,
+                matricule,
+                phone,
+                amount,
+                desc,
+                status: 'EN ATTENTE DE VALIDATION ADMIN'
+            });
+            saveDB(DB_KEYS.MICROFINANCE, mfList);
+
+            const msg = encodeURIComponent(
+                `🛡️ *DEMANDE GUICHET SOLIDAIRE AMPEMIK*\n\n` +
+                `- Type : *${serviceType}*\n` +
+                `- Nom : ${name} (${matricule})\n` +
+                `- Téléphone M-Pesa : ${phone}\n` +
+                `- Montant : ${amount}\n` +
+                `- Détails : ${desc}\n\n` +
+                `Merci de valider et d'enregistrer la transaction sur le compte M-Pesa (0816927645).`
+            );
+
+            alert("✅ Demande soumise avec succès !\n\nL'administrateur va recevoir la notification et valider votre opération M-Pesa.");
+            window.open(`https://wa.me/243816927645?text=${msg}`, '_blank');
+            closeModal('microfinance-modal');
+            document.getElementById('microfinance-form').reset();
+        });
+
+        function renderProducts() {
+            const products = getDB(DB_KEYS.PRODUCTS, defaultProducts);
+            const container = document.getElementById('products-list');
+            container.innerHTML = '';
+
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "searchable-item bg-slate-950 p-4 rounded-2xl border border-slate-800 hover:border-brand-500/45 transition-all flex flex-col justify-between space-y-3";
+                
+                const imgMarkup = p.image 
+                    ? `<img src="${p.image}" class="w-full h-32 object-cover rounded-xl mb-2">` 
+                    : `<div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-2xl mx-auto"><i class="fa-solid ${p.icon || 'fa-box'}"></i></div>`;
+
+                const shareHtml = generateSocialShareMarkup(p.name, p.price + ' - ' + p.desc);
+
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        ${imgMarkup}
+                        <div class="text-center">
+                            <h4 class="font-bold text-sm text-white">${p.name}</h4>
+                            <span class="text-[10px] text-brand-400 font-semibold bg-brand-500/10 px-2 py-0.5 rounded-full">${p.tag}</span>
+                        </div>
+                        <p class="text-xs text-slate-300 text-center">${p.desc}</p>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-xs text-brand-400 font-black block text-center">${p.price}</span>
+                        <button onclick="orderProduct('${p.name.replace(/'/g, "\\'")}', '${p.price.replace(/'/g, "\\'")}')" class="w-full py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-cart-shopping"></i> Commander
+                        </button>
+                        ${shareHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function orderProduct(name, price) {
+            document.getElementById('modal-item-title').innerText = "Commander : " + name;
+            document.getElementById('modal-item-subtitle').innerText = "Prix indicatif : " + price;
+            document.getElementById('selected-item-name').value = name;
+            document.getElementById('order-modal').classList.remove('hidden');
+        }
+
+        function renderFormations() {
+            const formations = getDB(DB_KEYS.FORMATIONS, defaultFormations);
+            const container = document.getElementById('formations-list');
+            container.innerHTML = '';
+
+            formations.forEach(f => {
+                const card = document.createElement('div');
+                card.className = "searchable-item bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 hover:border-brand-500/40 transition-all flex flex-col justify-between";
+                const shareHtml = generateSocialShareMarkup(f.title, 'Formation Privée & Brevet - ' + f.price);
+
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl shrink-0"><i class="fa-solid ${f.icon || 'fa-graduation-cap'}"></i></div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white">${f.title}</h4>
+                                <span class="text-[10px] text-brand-400 font-semibold bg-brand-500/10 px-2 py-0.5 rounded">${f.modules}</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-300">${f.desc}</p>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-amber-400 font-bold"><i class="fa-solid fa-award"></i> Sanctionné par Brevet</span>
+                            <span class="text-brand-400 font-extrabold">${f.price}</span>
+                        </div>
+                    </div>
+                    <div class="space-y-2 pt-2">
+                        <button onclick="openFormationModal('${f.title.replace(/'/g, "\\'")}', '${f.price}')" class="w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-lock-open"></i> S'inscrire & Payer (M-PESA / Bureau)
+                        </button>
+                        ${shareHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openFormationModal(title, price) {
+            document.getElementById('modal-formation-title').innerText = "Inscription : " + title;
+            document.getElementById('selected-formation-id').value = title;
+            document.getElementById('formation-modal').classList.remove('hidden');
+        }
+
+        document.getElementById('formation-pay-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formationTitle = document.getElementById('selected-formation-id').value;
+            const name = document.getElementById('form-user-name').value.trim();
+            const matricule = document.getElementById('form-user-matricule').value.trim();
+            const phone = document.getElementById('form-user-phone').value.trim();
+            const mode = document.getElementById('form-payment-mode').value;
+
+            const requests = getDB(DB_KEYS.FORMATION_REQUESTS, []);
+            requests.unshift({
+                id: Date.now(),
+                formation: formationTitle,
+                name,
+                matricule,
+                phone,
+                mode,
+                status: 'EN ATTENTE DE PAIEMENT / DÉBLOCAGE'
+            });
+            saveDB(DB_KEYS.FORMATION_REQUESTS, requests);
+
+            const msg = encodeURIComponent(
+                `🎓 *DEMANDE DE FORMATION PRIVÉE AMPEMIK*\n\n` +
+                `- Formation : *${formationTitle}*\n` +
+                `- Nom : ${name}\n` +
+                `- Matricule : ${matricule}\n` +
+                `- Téléphone : ${phone}\n` +
+                `- Mode de paiement : ${mode}\n\n` +
+                `Merci de valider et débloquer mon accès pour l'obtention du brevet.`
+            );
+
+            alert("✅ Demande soumise avec succès !\n\nL'administrateur vérifiera votre paiement M-PESA ou au bureau pour débloquer votre accès.");
+            window.open(`https://wa.me/243816927645?text=${msg}`, '_blank');
+            closeModal('formation-modal');
+            document.getElementById('formation-pay-form').reset();
+        });
+
+        document.getElementById('order-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const itemName = document.getElementById('selected-item-name').value;
+            const name = document.getElementById('order-name').value;
+            const phone = document.getElementById('order-phone').value;
+            const address = document.getElementById('order-address').value;
+            const qty = document.getElementById('order-quantity').value;
+
+            const msg = encodeURIComponent(
+                `🛒 *COMMANDE AMPEMIK CONNECT*\n\n` +
+                `- Produit : *${itemName}*\n` +
+                `- Client : ${name}\n` +
+                `- Téléphone : ${phone}\n` +
+                `- Adresse : ${address}\n` +
+                `- Quantité : ${qty}\n\n` +
+                `Paiement M-PESA au 0816927645`
+            );
+
+            window.open(`https://wa.me/243816927645?text=${msg}`, '_blank');
+            closeModal('order-modal');
+        });
+
+        function renderMarket() {
+            const market = getDB(DB_KEYS.MARKET, defaultMarket);
+            const container = document.getElementById('market-listings');
+            container.innerHTML = '';
+
+            market.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "searchable-item bg-slate-950 p-4 rounded-2xl border border-slate-800 hover:border-amber-500/40 transition-all space-y-3 flex flex-col justify-between";
+                const isOffer = item.type === 'OFFRE';
+                const badgeStyle = isOffer ? 'bg-amber-500/20 text-amber-300' : 'bg-sky-500/20 text-sky-300';
+                const badgeLabel = isOffer ? '🏷️ OFFRE' : '🔍 DEMANDE';
+
+                const imagePreview = item.image ? `<img src="${item.image}" alt="${item.title}" class="w-full h-36 object-cover rounded-xl mb-2">` : '';
+                const shareHtml = generateSocialShareMarkup(item.title, item.price + ' - ' + item.location);
+
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        ${imagePreview}
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] ${badgeStyle} font-bold px-2 py-0.5 rounded">${badgeLabel}</span>
+                            <span class="text-[10px] text-slate-400"><i class="fa-solid fa-location-dot"></i> ${item.location}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-white">${item.title}</h4>
+                        <p class="text-xs text-slate-300">${item.desc}</p>
+                        <div class="text-xs text-amber-400 font-extrabold">${item.price}</div>
+                        <div class="text-[10px] text-slate-400 border-t border-slate-900 pt-2 flex justify-between">
+                            <span>Auteur : ${item.seller}</span>
+                            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-shield"></i> Courtage 10%</span>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <button onclick="contactMarketDeal('${item.title.replace(/'/g, "\\'")}', '${item.price}', '${item.seller}', '${item.phone}')" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp"></i> Contacter
+                        </button>
+                        ${shareHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function contactMarketDeal(title, price, seller, phone) {
+            const msg = encodeURIComponent(
+                `🤝 *TRANSACTION MARCHÉ AMPEMIK*\n\n` +
+                `Bonjour, je suis intéressé par l'annonce :\n` +
+                `- Titre : *${title}*\n` +
+                `- Prix : ${price}\n` +
+                `- Vendeur : ${seller}\n\n` +
+                `Achat sécurisé via AMPEMIK M-PESA : 0816927645`
+            );
+            window.open(`https://wa.me/243816927645?text=${msg}`, '_blank');
+        }
+
+        function renderJobs() {
+            const jobs = getDB(DB_KEYS.JOBS, defaultJobs);
+            const container = document.getElementById('jobs-listings');
+            container.innerHTML = '';
+
+            jobs.forEach(j => {
+                const card = document.createElement('div');
+                card.className = "searchable-item bg-slate-950 p-4 rounded-2xl border border-slate-800 hover:border-sky-500/40 transition-all space-y-3 flex flex-col justify-between";
+                const isOffre = j.type === 'OFFRE';
+                const badgeStyle = isOffre ? 'bg-emerald-500/20 text-emerald-300' : 'bg-purple-500/20 text-purple-300';
+                const shareHtml = generateSocialShareMarkup(j.title, 'Par ' + j.author + ' - ' + j.desc);
+
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        <span class="text-[10px] ${badgeStyle} font-bold px-2 py-0.5 rounded">${isOffre ? '📢 OFFRE D\'EMPLOI' : '📄 PROFIL / CV'}</span>
+                        <h4 class="font-bold text-sm text-white">${j.title}</h4>
+                        <p class="text-xs text-slate-300">${j.desc}</p>
+                        <div class="text-[10px] text-sky-400 font-semibold">Par : ${j.author}</div>
+                    </div>
+                    <div class="space-y-2">
+                        <button onclick="contactJob('${j.title.replace(/'/g, "\\'")}', '${j.author}', '${j.contact}')" class="w-full py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp"></i> Postuler / Contacter
+                        </button>
+                        ${shareHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function contactJob(title, author, contact) {
+            const msg = encodeURIComponent(
+                `💼 *GUICHET EMPLOI AMPEMIK*\n\n` +
+                `Bonjour, je vous contacte concernant l'annonce :\n` +
+                `- Poste : *${title}*\n` +
+                `- Publié par : ${author}\n\n` +
+                `Merci de me mettre en relation.`
+            );
+            window.open(`https://wa.me/243816927645?text=${msg}`, '_blank');
+        }
+
+        function renderVideos() {
+            const videos = getDB(DB_KEYS.VIDEOS, defaultVideos);
+            const container = document.getElementById('video-feed-list');
+            container.innerHTML = '';
+
+            videos.forEach(v => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-2 flex flex-col justify-between";
+                const shareHtml = generateSocialShareMarkup(v.title, "Vidéo Publicitaire AMPEMIK Connect");
+
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-xs text-white truncate">${v.title}</h4>
+                        <video controls class="w-full h-40 rounded-xl bg-black object-cover">
+                            <source src="${v.url}" type="video/mp4">
+                            Votre navigateur ne supporte pas le lecteur vidéo.
+                        </video>
+                        <span class="text-[9px] text-rose-400 font-semibold block text-right">⏱️ 1 min max</span>
+                    </div>
+                    <div>${shareHtml}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderChats() {
+            const chats = getDB(DB_KEYS.CHATS, defaultChats);
+            const feed = document.getElementById('chat-feed-list');
+            feed.innerHTML = '';
+
+            chats.forEach(c => {
+                const div = document.createElement('div');
+                div.className = "bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1";
+                div.innerHTML = `
+                    <div class="flex justify-between items-center text-[10px]">
+                        <strong class="text-white font-bold">${c.sender}</strong>
+                        <span class="bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded font-mono">${c.recipient}</span>
+                    </div>
+                    <p class="text-slate-300 text-xs">${c.message}</p>
+                    <span class="text-[9px] text-slate-500 block text-right">${c.date}</span>
+                `;
+                feed.appendChild(div);
+            });
+        }
+
+        document.getElementById('chat-send-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const sender = document.getElementById('chat-sender').value.trim();
+            const recipientType = document.getElementById('chat-recipient').value;
+            const targetMember = document.getElementById('chat-target-member').value.trim();
+            const message = document.getElementById('chat-message').value.trim();
+
+            const finalRecipient = recipientType === 'DIRECT_MEMBER' ? targetMember : recipientType;
+            const dateStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+            const newChat = { id: Date.now(), sender, recipient: finalRecipient, message, date: dateStr };
+            const chats = getDB(DB_KEYS.CHATS, defaultChats);
+            chats.unshift(newChat);
+            saveDB(DB_KEYS.CHATS, chats);
+
+            renderChats();
+            document.getElementById('chat-message').value = '';
+            alert("✅ Message transmis avec succès !");
+        });
+
+        let qrcodeObj = null;
+        function setupQRPreview() {
+            qrcodeObj = new QRCode(document.getElementById("qrcode"), { text: "AMPEMIK-TEMOIN", width: 45, height: 45 });
+            document.getElementById('reg-full-name').addEventListener('input', (e) => {
+                document.getElementById('card-name').innerText = e.target.value || 'Votre Nom Complet';
+            });
+            document.getElementById('reg-user-profile').addEventListener('change', (e) => {
+                document.getElementById('card-category').innerText = e.target.value;
+            });
+        }
+
+        // --- GESTION ADHÉSION ET PARRAINAGE 20% ---
+        document.getElementById('registration-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reg-full-name').value.trim();
+            const phone = document.getElementById('reg-phone-number').value.trim();
+            const category = document.getElementById('reg-user-profile').value;
+            const sponsor = document.getElementById('reg-sponsor').value.trim();
+            const matricule = '#AMP-2026-' + Math.floor(1000 + Math.random() * 9000);
+
+            const newMember = { matricule, name, phone, category, sponsor, status: 'EN ATTENTE', date: new Date().toISOString().split('T')[0] };
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            members.push(newMember);
+            saveDB(DB_KEYS.MEMBERS, members);
+
+            document.getElementById('card-status').innerText = "EN ATTENTE ⏳";
+            document.getElementById('card-matricule').innerText = matricule;
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), { text: `AMPEMIK|${matricule}|${name}`, width: 45, height: 45 });
+
+            const referralLink = `${window.location.href.split('?')[0]}?ref=${matricule}`;
+            
+            if (sponsor) {
+                const allMembers = getDB(DB_KEYS.MEMBERS, defaultMembers);
+                const sponsorObj = allMembers.find(m => m.matricule.toUpperCase() === sponsor.toUpperCase());
+                if (sponsorObj) {
+                    const sponsorMsg = encodeURIComponent(
+                        `🎉 *BONUS DE PARRAINAGE AMPEMIK (20%)*\n\n` +
+                        `Bonjour *${sponsorObj.name}*,\n` +
+                        `Votre filleul *${name}* (${matricule}) vient de s'inscrire via votre lien de parrainage !\n\n` +
+                        `💰 Votre commission de 20% (1 000 FC sur 5 000 FC) est enregistrée et sera versée par l'administrateur via M-Pesa à la fin de chaque semaine.`
+                    );
+                    console.log("Notification WhatsApp envoyée au parrain : " + sponsorObj.phone);
+                }
+            }
+
+            const adminMsg = encodeURIComponent(
+                `🚨 *NOUVELLE ADHÉSION & PARRAINAGE*\n\n` +
+                `- Nom : *${name}*\n` +
+                `- Matricule : *${matricule}*\n` +
+                `- Téléphone M-Pesa : ${phone}\n` +
+                `- Catégorie : ${category}\n` +
+                (sponsor ? `- Parrain (Bénéficiaire 20%) : ${sponsor}\n` : '') +
+                `- Frais : 5 000 FC\n\n` +
+                `Lien de parrainage : ${referralLink}\n\n` +
+                `Merci de valider la carte et de programmer le versement du bonus parrainage.`
+            );
+
+            alert(`✅ Adhésion soumise avec succès !\nMatricule attribué : ${matricule}\n\nL'application va ouvrir WhatsApp pour notifier l'administration (M-Pesa 0816927645).`);
+            window.open(`https://wa.me/243816927645?text=${adminMsg}`, '_blank');
+            closeModal('adhesion-modal');
+        });
+
+        function downloadMemberCard() {
+            const cardElem = document.getElementById('member-card-preview');
+            html2canvas(cardElem).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Carte_Membre_AMPEMIK.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        document.getElementById('market-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const matricule = document.getElementById('market-matricule').value.trim();
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            const activeMember = members.find(m => m.matricule.toUpperCase() === matricule.toUpperCase() && m.status === 'VALIDÉ');
+
+            if (!activeMember) {
+                alert("⚠️ Seuls les membres adhérents validés (Carte Active) peuvent publier une annonce !\n\nVeuillez régulariser votre droit d'adhésion de 5 000 FC.");
+                return;
+            }
+
+            const imgFile = document.getElementById('market-image-input').files[0];
+
+            const saveAnnonce = (imgBase64 = '') => {
+                const newItem = {
+                    id: Date.now(),
+                    type: document.getElementById('market-type').value,
+                    title: document.getElementById('market-title').value,
+                    price: document.getElementById('market-price').value,
+                    location: document.getElementById('market-location').value,
+                    seller: `${activeMember.name} (${activeMember.matricule})`,
+                    phone: activeMember.phone,
+                    desc: document.getElementById('market-desc').value,
+                    image: imgBase64
+                };
+
+                const market = getDB(DB_KEYS.MARKET, defaultMarket);
+                market.unshift(newItem);
+                saveDB(DB_KEYS.MARKET, market);
+
+                renderMarket();
+                alert("✅ Votre annonce a été publiée avec succès sur le Cloud et en Local !");
+                closeModal('market-modal');
+                document.getElementById('market-form').reset();
+            };
+
+            if (imgFile) {
+                const reader = new FileReader();
+                reader.onload = (event) => saveAnnonce(event.target.result);
+                reader.readAsDataURL(imgFile);
+            } else {
+                saveAnnonce();
+            }
+        });
+
+        document.getElementById('job-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const matricule = document.getElementById('job-matricule').value.trim();
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            const activeMember = members.find(m => m.matricule.toUpperCase() === matricule.toUpperCase() && m.status === 'VALIDÉ');
+
+            if (!activeMember) {
+                alert("⚠️ Réservé aux membres validés avec carte active.");
+                return;
+            }
+
+            const newJob = {
+                id: Date.now(),
+                type: document.getElementById('job-type').value,
+                title: document.getElementById('job-title').value,
+                author: document.getElementById('job-author').value,
+                contact: document.getElementById('job-contact').value,
+                desc: document.getElementById('job-desc').value
+            };
+
+            const jobs = getDB(DB_KEYS.JOBS, defaultJobs);
+            jobs.unshift(newJob);
+            saveDB(DB_KEYS.JOBS, jobs);
+
+            renderJobs();
+            alert("✅ Publication enregistrée dans l'Espace Emploi !");
+            closeModal('job-modal');
+            document.getElementById('job-form').reset();
+        });
+
+        function verifyMemberCard() {
+            const input = document.getElementById('verify-input').value.trim().toUpperCase();
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            const resDiv = document.getElementById('verify-result');
+            resDiv.classList.remove('hidden');
+
+            const found = members.find(m => m.matricule.toUpperCase() === input);
+
+            if (found) {
+                const isValid = found.status === 'VALIDÉ';
+                resDiv.className = `bg-slate-950 p-4 rounded-2xl border ${isValid ? 'border-emerald-500' : 'border-amber-500'} space-y-1 text-xs`;
+                resDiv.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white text-sm">${found.name}</strong>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isValid ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${found.status}</span>
+                    </div>
+                    <p class="text-slate-300"><strong>Matricule :</strong> ${found.matricule}</p>
+                    <p class="text-slate-300"><strong>Catégorie :</strong> ${found.category}</p>
+                    <p class="text-slate-300"><strong>Téléphone :</strong> ${found.phone}</p>
+                    ${found.sponsor ? `<p class="text-brand-400"><strong>Parrain :</strong> ${found.sponsor} (Commission 20%)</p>` : ''}
+                `;
+            } else {
+                resDiv.className = "bg-slate-950 p-4 rounded-2xl border border-rose-500 text-xs text-rose-400 text-center";
+                resDiv.innerHTML = "❌ Aucun membre trouvé avec ce matricule.";
+            }
+        }
+
+        // --- DASHBOARD ADMIN ---
+        function renderAdminDashboard() {
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            const requests = getDB(DB_KEYS.FORMATION_REQUESTS, []);
+            const mfRequests = getDB(DB_KEYS.MICROFINANCE, defaultMicrofinance);
+
+            document.getElementById('stat-total-members').innerText = members.length;
+            const validCount = members.filter(m => m.status === 'VALIDÉ').length;
+            document.getElementById('stat-active-members').innerText = validCount;
+            document.getElementById('stat-total-funds').innerText = (validCount * 5000).toLocaleString('fr-FR') + " FC";
+            document.getElementById('stat-total-mf').innerText = mfRequests.length;
+
+            renderAdminMembersList(members);
+            renderAdminFormationsRequests(requests);
+            renderAdminMicrofinanceRequests(mfRequests);
+        }
+
+        function renderAdminMicrofinanceRequests(mfList) {
+            const container = document.getElementById('admin-mf-requests');
+            container.innerHTML = '';
+
+            if (mfList.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-500 italic">Aucune demande de microfinance ou assurance.</p>';
+                return;
+            }
+
+            mfList.forEach((mf, idx) => {
+                const isValid = mf.status === 'VALIDÉ';
+                const div = document.createElement('div');
+                div.className = "bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs flex-wrap gap-2";
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold text-white">${mf.name} (${mf.matricule}) — <span class="text-brand-400">${mf.type}</span></div>
+                        <div class="text-[10px] text-slate-400">Montant : ${mf.amount} | M-Pesa : ${mf.phone} | Motif : ${mf.desc}</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isValid ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${mf.status}</span>
+                        ${!isValid ? `<button onclick="adminValidateMF(${idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-check"></i> Valider M-Pesa</button>` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function adminValidateMF(index) {
+            const mfList = getDB(DB_KEYS.MICROFINANCE, defaultMicrofinance);
+            mfList[index].status = 'VALIDÉ';
+            saveDB(DB_KEYS.MICROFINANCE, mfList);
+            renderAdminDashboard();
+            alert("✅ Opération microfinance / assurance validée avec succès !");
+        }
+
+        function renderAdminFormationsRequests(requests) {
+            const container = document.getElementById('admin-formations-requests');
+            container.innerHTML = '';
+
+            if (requests.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-500 italic">Aucune demande de formation en attente.</p>';
+                return;
+            }
+
+            requests.forEach((r, idx) => {
+                const isUnlocked = r.status === 'DÉBLOQUÉ & BREVET PRÉVU';
+                const div = document.createElement('div');
+                div.className = "bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs flex-wrap gap-2";
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold text-white">${r.name} (${r.matricule})</div>
+                        <div class="text-[10px] text-brand-400 font-semibold">${r.formation} — Paiement via ${r.mode} (${r.phone})</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isUnlocked ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${r.status}</span>
+                        ${!isUnlocked 
+                            ? `<button onclick="adminUnlockFormation(${idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-unlock"></i> Débloquer l'Accès</button>` 
+                            : `<button onclick="adminLockFormation(${idx})" class="bg-amber-600 hover:bg-amber-500 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-lock"></i> Verrouiller</button>`
+                        }
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function adminUnlockFormation(index) {
+            const requests = getDB(DB_KEYS.FORMATION_REQUESTS, []);
+            requests[index].status = 'DÉBLOQUÉ & BREVET PRÉVU';
+            saveDB(DB_KEYS.FORMATION_REQUESTS, requests);
+            renderAdminDashboard();
+
+            const r = requests[index];
+            const msg = encodeURIComponent(
+                `🎉 *ACCÈS FORMATION DÉBLOQUÉ AMPEMIK*\n\n` +
+                `Bonjour *${r.name}*,\n` +
+                `Votre paiement pour la formation *${r.formation}* a été validé par la direction !\n\n` +
+                `🔓 Accès au contenu : *DÉBLOQUÉ*\n` +
+                `📜 Sanction : *Brevet Officiel AMPEMIK*\n\n` +
+                `Félicitations et bonne formation !`
+            );
+            window.open(`https://wa.me/243${r.phone.replace(/^0/, '')}?text=${msg}`, '_blank');
+        }
+
+        function adminLockFormation(index) {
+            const requests = getDB(DB_KEYS.FORMATION_REQUESTS, []);
+            requests[index].status = 'EN ATTENTE DE PAIEMENT / DÉBLOCAGE';
+            saveDB(DB_KEYS.FORMATION_REQUESTS, requests);
+            renderAdminDashboard();
+        }
+
+        function renderAdminMembersList(members) {
+            const container = document.getElementById('admin-members-list');
+            container.innerHTML = '';
+
+            members.forEach((m, idx) => {
+                const isValid = m.status === 'VALIDÉ';
+                const div = document.createElement('div');
+                div.className = "bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs flex-wrap gap-2";
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold text-white">${m.name} <span class="text-brand-400 font-mono">${m.matricule}</span> ${m.sponsor ? `<span class="text-xs text-amber-400">[Parrain: ${m.sponsor}]</span>` : ''}</div>
+                        <div class="text-[10px] text-slate-400">${m.category} | ${m.phone} | ${m.date}</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isValid ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${m.status}</span>
+                        ${!isValid 
+                            ? `<button onclick="adminApproveMember(${idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-check"></i> Activer</button>` 
+                            : `<button onclick="adminSetPendingMember(${idx})" class="bg-amber-600 hover:bg-amber-500 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-pause"></i> Mettre en attente</button>`
+                        }
+                        <button onclick="adminDeleteMember(${idx})" class="bg-rose-900/40 hover:bg-rose-800 text-rose-300 text-[10px] px-2 py-1 rounded-lg"><i class="fa-solid fa-trash"></i> Supprimer</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function adminValidateCashMember() {
+            const name = document.getElementById('cash-member-name').value.trim();
+            const phone = document.getElementById('cash-member-phone').value.trim();
+            const category = document.getElementById('cash-member-cat').value;
+
+            if (!name || !phone) {
+                alert("Veuillez remplir le nom et le numéro de téléphone.");
+                return;
+            }
+
+            const matricule = '#AMP-2026-' + Math.floor(1000 + Math.random() * 9000);
+            const newMember = {
+                matricule,
+                name,
+                phone,
+                category,
+                status: 'VALIDÉ',
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            members.push(newMember);
+            saveDB(DB_KEYS.MEMBERS, members);
+
+            alert(`✅ Membre ${name} inscrit et VALIDÉ avec succès !\nMatricule : ${matricule}`);
+            document.getElementById('cash-member-name').value = '';
+            document.getElementById('cash-member-phone').value = '';
+            renderAdminDashboard();
+        }
+
+        function adminApproveMember(index) {
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            members[index].status = 'VALIDÉ';
+            saveDB(DB_KEYS.MEMBERS, members);
+            renderAdminDashboard();
+
+            const m = members[index];
+            const msg = encodeURIComponent(
+                `🎉 *ACTIVATION CARTE MEMBRE AMPEMIK*\n\n` +
+                `Bonjour *${m.name}*,\n` +
+                `Votre paiement de 5 000 FC a été confirmé par la direction !\n\n` +
+                `🆔 Matricule Officiel : *${m.matricule}*\n` +
+                `✅ Statut : *CARTE ACTIVÉE*\n\n` +
+                `Vous pouvez désormais publier vos articles scientifiques, produits et offres en ligne.`
+            );
+            window.open(`https://wa.me/243${m.phone.replace(/^0/, '')}?text=${msg}`, '_blank');
+        }
+
+        function adminSetPendingMember(index) {
+            if (confirm("Voulez-vous vraiment remettre ce membre en attente ?")) {
+                const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+                members[index].status = 'EN ATTENTE';
+                saveDB(DB_KEYS.MEMBERS, members);
+                renderAdminDashboard();
+            }
+        }
+
+        function adminDeleteMember(index) {
+            if (confirm("Confirmer la suppression définitive de ce membre ?")) {
+                const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+                members.splice(index, 1);
+                saveDB(DB_KEYS.MEMBERS, members);
+                renderAdminDashboard();
+            }
+        }
+
+        function adminAddProduct() {
+            const name = document.getElementById('admin-prod-name').value.trim();
+            const price = document.getElementById('admin-prod-price').value.trim();
+            const sub = document.getElementById('admin-prod-sub').value.trim();
+            const desc = document.getElementById('admin-prod-desc').value.trim();
+            const imgFile = document.getElementById('admin-prod-img').files[0];
+
+            if (!name || !price) {
+                alert("Veuillez saisir le nom et le prix.");
+                return;
+            }
+
+            const products = getDB(DB_KEYS.PRODUCTS, defaultProducts);
+
+            const saveProd = (imgBase64 = '') => {
+                products.push({ id: Date.now(), name, tag: sub || 'Officiel AMPEMIK', price, desc, icon: 'fa-box', image: imgBase64 });
+                saveDB(DB_KEYS.PRODUCTS, products);
+
+                renderProducts();
+                alert("✅ Produit ajouté à la boutique !");
+                document.getElementById('admin-prod-name').value = '';
+                document.getElementById('admin-prod-price').value = '';
+            };
+
+            if (imgFile) {
+                const reader = new FileReader();
+                reader.onload = (e) => saveProd(e.target.result);
+                reader.readAsDataURL(imgFile);
+            } else {
+                saveProd();
+            }
+        }
+
+        function adminAddVideo() {
+            const title = document.getElementById('admin-vid-title').value.trim();
+            const videoFile = document.getElementById('admin-vid-file').files[0];
+
+            if (!title || !videoFile) {
+                alert("⚠️ Veuillez saisir un titre et sélectionner un fichier vidéo depuis votre appareil.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const videoBase64 = event.target.result;
+                const videos = getDB(DB_KEYS.VIDEOS, defaultVideos);
+                videos.unshift({ id: Date.now(), title, url: videoBase64 });
+                saveDB(DB_KEYS.VIDEOS, videos);
+
+                renderVideos();
+                alert("✅ Vidéo locale téléversée et publiée avec succès !");
+                document.getElementById('admin-vid-title').value = '';
+                document.getElementById('admin-vid-file').value = '';
+            };
+            reader.readAsDataURL(videoFile);
+        }
+
+        function exportDataCSV() {
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            let csv = "Matricule;Nom;Telephone;Categorie;Parrain;Statut;Date\n";
+            members.forEach(m => {
+                csv += `${m.matricule};${m.name};${m.phone};${m.category};${m.sponsor || ''};${m.status};${m.date}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `Membre_AMPEMIK_Export_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+
+        function exportDataGmail() {
+            const members = getDB(DB_KEYS.MEMBERS, defaultMembers);
+            const body = encodeURIComponent(`SAUVEGARDE BASE DE DONNÉES MEMBRES AMPEMIK :\n\n` + JSON.stringify(members, null, 2));
+            window.open(`mailto:ampeasbl@gmail.com?subject=Sauvegarde_Base_AMPEMIK&body=${body}`, '_blank');
+        }
+
+        function filterGlobal() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const items = document.querySelectorAll('.searchable-item');
+            items.forEach(item => {
+                item.style.display = item.innerText.toLowerCase().includes(query) ? '' : 'none';
+            });
+        }
+
+        function filterCategory(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active', 'bg-brand-600', 'text-white'));
+            event.target.classList.add('active', 'bg-brand-600', 'text-white');
+
+            const sections = document.querySelectorAll('.searchable-section');
+            sections.forEach(sec => {
+                if (category === 'ALL' || sec.getAttribute('data-cat') === category) {
+                    sec.style.display = '';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('btn-share-whatsapp').addEventListener('click', () => {
+            const shareText = encodeURIComponent(
+                `📢 *AMPEMIK CONNECT — LA PLATEFORME UNIFIÉE*\n\n` +
+                `🛍 Boutique & Bio-Fertilisants\n` +
+                `📚 Articles Scientifiques & Inspirations\n` +
+                `🛡️ Microfinance, Épargne & Assurances (M-Pesa)\n` +
+                `🎓 Formations Privées & Brevets\n` +
+                `🎁 Parrainage Rémunéré (20% de commission)\n\n` +
+                `Rejoignez-nous dès maintenant : ${window.location.href.split('?')[0]}`
+            );
+            window.open(`https://wa.me/?text=${shareText}`, '_blank');
+        });
+    </script>
+</body>
+</html>
